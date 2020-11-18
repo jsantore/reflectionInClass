@@ -10,6 +10,13 @@ type profDemo struct {
 	id   int
 }
 
+type studentDemo struct {
+	enrollDate   int
+	coursesTaken string
+	grade        int
+	prof         profDemo
+}
+
 func basicReflectionDemo(mystery interface{}) {
 	mysteryType := reflect.TypeOf(mystery)
 	kind := mysteryType.Kind()
@@ -47,6 +54,14 @@ func getsizeReflection(mysteryData interface{}) int {
 	}
 }
 
+func structRefletion(data interface{}) {
+	structReflect := reflect.ValueOf(data)
+	numberOFfields := structReflect.NumField()
+	for i := 0; i < numberOFfields; i++ {
+		fmt.Printf("fieldNumber %d with value %#v \n", i, structReflect.Field(i))
+	}
+}
+
 func main() {
 	var1 := 4
 	basicReflectionDemo(var1)
@@ -57,4 +72,13 @@ func main() {
 	var3 := profDemo{name: "John Santore",
 		id: 12345678}
 	basicReflectionDemo(var3)
+	var4 := studentDemo{
+		enrollDate:   345,
+		coursesTaken: "Too many make it stop",
+		grade:        4,
+		prof:         var3,
+	}
+	structRefletion(var3)
+	fmt.Println("============================")
+	structRefletion(var4)
 }
